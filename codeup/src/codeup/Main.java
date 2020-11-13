@@ -1,5 +1,6 @@
 package codeup;
-
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Main {
@@ -7,29 +8,24 @@ public class Main {
 	public static void main(String[] args) { //static void main 
 
 		Scanner sc = new Scanner(System.in);
-		String result = sc.nextLine();
+		String a = sc.nextLine();
+		String[] b;
+		int c = 0;
+		b = a.split("");		
 
-		result = result.replaceAll("[^0-9a-z-_.]" ,"");
-		result = result.replaceAll("[\\.]+", "\\.");
-		result = result.replaceAll("^[\\.][\\.]$","");
-
-		if(result.length()>=16) {
-			result = result.substring(0,15);
-		}
-		result = result.replaceAll("[\\.]$", "");
-		if(result.equals("")) {
-			result = "a";
-		}
-
-		if(result.length()<3) {
-			for(int i=0; i<2; i++) { 
-				result += result.charAt(result.length()-1);
+		for (int i = 0; i < b.length; i++) {
+			if(b[i].equals("7")){
+				c++;
 			}
-			result = result.substring(0,3);
 		}
-		
-		System.out.println(result);
+		if(c>=4) {
+			System.out.println("LUCKY STRIKE");
+			for(int i = 0; i < b.length; i++) {
+				Arrays.sort(b,Collections.reverseOrder());
+				System.out.print(b[i]);
+			}
+		}else {System.out.print("UNLUCKY STRIKE");}		
 	}
 
-}
 
+}
