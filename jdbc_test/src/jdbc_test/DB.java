@@ -12,7 +12,7 @@ public class DB {
 		String url = "jdbc:oracle:thin:@192.168.0.212:1521:XE";
 		String user = "JHI";
 		String password = "0000";
-		
+
 		try {
 			//ODJBC6 파일 현재 소스에 적용
 			Class.forName("oracle.jdbc.driver.OracleDriver");

@@ -4,9 +4,9 @@ public class CRUD_DTO {
 
 	String stuName;
 	int stAge;
-	
-	
-	
+
+
+
 	public String getStuName() {
 		return stuName;
 	}
@@ -19,5 +19,5 @@ public class CRUD_DTO {
 	public void setStAge(int stAge) {
 		this.stAge = stAge;
 	}
-		
+
 }
