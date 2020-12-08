@@ -1,41 +1,66 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-/**
- * Servlet implementation class MemberLoginController
- */
+import dto.MemberDTO;
+import services.MemberLoginServices;
+
+
 @WebServlet("/memberLogin")
 public class MemberLoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public MemberLoginController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+	public MemberLoginController() {
+		super();
+
+	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		doProcess(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		doProcess(request, response);	
 	}
 
+
+	protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		String userNick=null;
+		MemberDTO dto = new MemberDTO();
+		
+		dto.setUserId(request.getParameter("id"));
+		dto.setUserPw(request.getParameter("pw"));
+		
+		MemberLoginServices mls = new MemberLoginServices();
+		userNick = mls.logIn(dto);
+
+		HttpSession ss = request.getSession();
+
+		if (userNick!=null) {
+			ss.setAttribute("nick", userNick);
+			ss.setAttribute("Level", dto.getUserLevel());
+			ss.setAttribute("id", dto.getUserId());
+			response.sendRedirect("Main.jsp");
+		}else {
+			ss.invalidate();
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('로그아웃 되었습니다.!!');</script>");
+			out.println("<script>location.href='index.html';</script>");
+		}
+
+
+
+
+	}
 }

@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,7 +20,6 @@ public class MemberDeleteController extends HttpServlet {
         super();
     
     }
-
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -40,6 +41,9 @@ public class MemberDeleteController extends HttpServlet {
 		result = mds.memberDelete(id, nick);
 		HttpSession hs = request.getSession();
 		hs.invalidate();
-		response.sendRedirect("index.html");
+		
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('회원 삭제 완료');</script>");
+		out.println("<script>location.href='index.html';</script>");
 	}
 }

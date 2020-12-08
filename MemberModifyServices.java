@@ -18,6 +18,7 @@ public class MemberModifyServices {
 		// 여기까지
 		int result=0;
 		result = dao.memberModi(id,member);
+		System.out.println(result);
 		if (result>0) {
 			commit(con);
 		}else {rollback(con);}

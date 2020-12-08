@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,8 +41,8 @@ public class MemberModifyController extends HttpServlet {
 		
 		String id = request.getParameter("id");
     	String nick = request.getParameter("nick");
+    	String pw = request.getParameter("password");
     	String name = request.getParameter("name");
-    	String birth = request.getParameter("birthyy")+request.getParameter("birthmm")+request.getParameter("birthdd");
     	String gender = request.getParameter("gender");
     	String phone = request.getParameter("phone");
     	String add = request.getParameter("add");
@@ -51,11 +53,11 @@ public class MemberModifyController extends HttpServlet {
     	
     	System.out.println(id);
     	System.out.println(nick);
-
+    	
+    	member.setUserPw(pw);
     	member.setUserNick(nick);
     	member.setUserName(name);
     	member.setUserTeam(team);
-    	member.setUserBirth(birth);
     	member.setUserGender(gender);
     	member.setUserPhone(phone);
     	member.setUserAdd(add);
@@ -63,10 +65,14 @@ public class MemberModifyController extends HttpServlet {
 		
     	MemberModifyServices mms = new MemberModifyServices();
     	result = mms.memberModi(id, member);
+    	PrintWriter out = response.getWriter();
+    	
     	if (result>0) {
-			response.sendRedirect("Main.jsp");
+			out.println("<script>alert('정보수정 성공!');</script>");
+			out.println("<script>location.href='Main.jsp';</script>");
 		}else {
-			response.sendRedirect("MemberDeleteForm.jsp");
+			out.println("<script>alert('정보수정 실패!');</script>");
+			out.println("<script>location.href='Main.jsp';</script>");
 		}
 	}
 }
